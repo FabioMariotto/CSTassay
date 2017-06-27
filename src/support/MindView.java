@@ -71,7 +71,7 @@ public class MindView extends javax.swing.JFrame {
     public void StartTimer() {
         t = new Timer();
         MVTimerTask tt = new MVTimerTask(this);
-        t.scheduleAtFixedRate(tt,0,500);
+        t.scheduleAtFixedRate(tt,0,1000);
     }
     
     public void tick() {

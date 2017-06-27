@@ -38,10 +38,17 @@ public class Environment {
           try {   
              World w = World.getInstance();
              w.reset();
-             World.createFood(0, 350, 75);
-             World.createFood(0, 100, 220);
-             World.createFood(0, 250, 210);
-             c = proxy.createCreature(100,450,0);
+             //World.createFood(0, 350, 75);
+             //World.createFood(0, 100, 220);
+             //World.createFood(0, 250, 210);
+              for (int i = 0; i < 18; i++) {
+                  if ((i%6)+1==6)
+                      World.createFood(0, 400+Math.sin(i*0.348)*200, 300+Math.cos(i*0.348)*200);
+                      else
+                  World.createJewel((i%6)+1, 400+Math.sin(i*0.348)*200, 300+Math.cos(i*0.348)*200);
+              }
+             
+             c = proxy.createCreature(400,300,0);
              c.start();
              //c.setRobotID("r0");
              //c.startCamera("r0");

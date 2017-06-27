@@ -37,23 +37,25 @@ public class Forage extends Codelet {
     
         private MemoryObject knownMO;
         private List<Thing> known;
-        private MemoryObject legsMO;
+        private MemoryObject unifiedMO;
 
 
 	/**
 	 * Default constructor
 	 */
-	public Forage(){       
+	public Forage(){    
+            setTimeStep(1000);
 	}
 
 	@Override
 	public void proc() {
+            if (knownMO!=null){
             known = (List<Thing>) knownMO.getI();
             if (known.size() == 0) {
 		JSONObject message=new JSONObject();
 			try {
 				message.put("ACTION", "FORAGE");
-				legsMO.updateI(message.toString());
+				unifiedMO.updateI(message.toString());
 			
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -62,11 +64,11 @@ public class Forage extends Codelet {
             }            
 		
 	}
-
+        }
 	@Override
 	public void accessMemoryObjects() {
-            knownMO = (MemoryObject)this.getInput("KNOWN_APPLES");
-            legsMO=(MemoryObject)this.getOutput("LEGS");
+            knownMO = (MemoryObject)this.getInput("CLOSEST_JEWEL");
+            unifiedMO=(MemoryObject)this.getOutput("UNIFIED");
 
 		// TODO Auto-generated method stub
 		

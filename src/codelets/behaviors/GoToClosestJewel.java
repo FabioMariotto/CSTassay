@@ -29,15 +29,15 @@ import br.unicamp.cst.core.entities.MemoryObject;
 import memory.CreatureInnerSense;
 import ws3dproxy.model.Thing;
 
-public class GoToClosestApple extends Codelet {
+public class GoToClosestJewel extends Codelet {
 
-	private MemoryObject closestAppleMO;
+	private MemoryObject closestJewelMO;
 	private MemoryObject selfInfoMO;
 	private MemoryObject unifiedMO;
 	private int creatureBasicSpeed;
 	private double reachDistance;
 
-	public GoToClosestApple(int creatureBasicSpeed, int reachDistance) {
+	public GoToClosestJewel(int creatureBasicSpeed, int reachDistance) {
 		this.creatureBasicSpeed=creatureBasicSpeed;
 		this.reachDistance=reachDistance;
                 setTimeStep(1000);
@@ -45,27 +45,27 @@ public class GoToClosestApple extends Codelet {
 
 	@Override
 	public void accessMemoryObjects() {
-		closestAppleMO=(MemoryObject)this.getInput("CLOSEST_APPLE");
+		closestJewelMO=(MemoryObject)this.getInput("CLOSEST_JEWEL");
 		selfInfoMO=(MemoryObject)this.getInput("INNER");
 		unifiedMO=(MemoryObject)this.getOutput("UNIFIED");
 	}
 
 	@Override
 	public void proc() {
-		// Find distance between creature and closest Apple
+		// Find distance between creature and closest Jewel
 		//If far, go towards it
 		//If close, stops
 
-                Thing closestApple = (Thing) closestAppleMO.getI();
+                Thing closestJewel = (Thing) closestJewelMO.getI();
                 CreatureInnerSense cis = (CreatureInnerSense) selfInfoMO.getI();
 
-		if(closestApple != null)
+		if(closestJewel != null)
 		{
-			double AppleX=0;
-			double AppleY=0;
+			double JewelX=0;
+			double JewelY=0;
 			try {
-                                AppleX = closestApple.getX1();
-                                AppleY = closestApple.getY1();
+                                JewelX = closestJewel.getX1();
+                                JewelY = closestJewel.getY1();
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -74,30 +74,31 @@ public class GoToClosestApple extends Codelet {
 			double selfX=cis.position.getX();
 			double selfY=cis.position.getY();
 
-			Point2D pApple = new Point();
-			pApple.setLocation(AppleX, AppleY);
+			Point2D pJewel = new Point();
+			pJewel.setLocation(JewelX, JewelY);
 
 			Point2D pSelf = new Point();
 			pSelf.setLocation(selfX, selfY);
 
-			double distance = pSelf.distance(pApple);
+			double distance = pSelf.distance(pJewel);
 			JSONObject message=new JSONObject();
 			try {
-                            if(cis.fuel<400){
+                            if(cis.fuel>=400){
 				if(distance>reachDistance){ //Go to it
                                         message.put("ACTION", "GOTO");
-					message.put("X", (int)AppleX);
-					message.put("Y", (int)AppleY);
+					message.put("X", (int)JewelX);
+					message.put("Y", (int)JewelY);
                                         message.put("SPEED", creatureBasicSpeed);	
 
 				}else{//Stop
 					message.put("ACTION", "GOTO");
-					message.put("X", (int)AppleX);
-					message.put("Y", (int)AppleY);
+					message.put("X", (int)JewelX);
+					message.put("Y", (int)JewelY);
                                         message.put("SPEED", 0.0);	
 				}
+                            
 				unifiedMO.updateI(message.toString());
-                            }
+                                }
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}	

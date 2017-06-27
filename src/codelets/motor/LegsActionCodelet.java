@@ -41,10 +41,11 @@ public class LegsActionCodelet extends Codelet{
 	private MemoryObject legsActionMO;
 	private double previousTargetx=0;
 	private double previousTargety=0;
-	private String previousLegsAction="";
-        private Creature c;
         double old_angle = 0;
         int k=0;
+	private String previousLegsAction="";
+        private Creature c;
+        
         static Logger log = Logger.getLogger(LegsActionCodelet.class.getCanonicalName());
 
 	public LegsActionCodelet(Creature nc) {

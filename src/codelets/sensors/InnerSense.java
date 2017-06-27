@@ -21,8 +21,13 @@ package codelets.sensors;
 
 import br.unicamp.cst.core.entities.Codelet;
 import br.unicamp.cst.core.entities.MemoryObject;
+import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import memory.CreatureInnerSense;
 import ws3dproxy.model.Creature;
+import ws3dproxy.model.Thing;
 
 
 /**
@@ -36,10 +41,18 @@ public class InnerSense extends Codelet {
 	private MemoryObject innerSenseMO;
         private Creature c;
         private CreatureInnerSense cis;
+        public List<String> Leaf = new ArrayList<>();
 
-	public InnerSense(Creature nc) {
+        
+    public void removeLeaf(String color){
+        if(Leaf.contains(color.toLowerCase())){
+            Leaf.remove(color.toLowerCase());
+        }
+    }
+        public InnerSense(Creature nc) {
 		c = nc;
-	}
+        }
+        
 	@Override
 	public void accessMemoryObjects() {
 		innerSenseMO=(MemoryObject)this.getOutput("INNER");
@@ -51,7 +64,33 @@ public class InnerSense extends Codelet {
              cis.pitch = c.getPitch();
              cis.fuel = c.getFuel();
              cis.FOV = c.getFOV();
-	}
+             int k=0;
+             Leaf.clear();
+             k=c.getLeaflets().get(0).getMissingNumberOfType("Green");
+                for (int i = 0; i < k; i++) {
+                Leaf.add("Green");
+            }
+                k=c.getLeaflets().get(0).getMissingNumberOfType("White");
+                for (int i = 0; i < k; i++) {
+                Leaf.add("White");
+            }
+                k=c.getLeaflets().get(0).getMissingNumberOfType("Magenta");
+                for (int i = 0; i < k; i++) {
+                Leaf.add("Magenta");
+            }
+                k=c.getLeaflets().get(0).getMissingNumberOfType("Blue");
+                for (int i = 0; i < k; i++) {
+                Leaf.add("Blue");
+            }
+                k=c.getLeaflets().get(0).getMissingNumberOfType("Yellow");
+                for (int i = 0; i < k; i++) {
+                Leaf.add("Yellow");
+            }
+               cis.LEAF = Leaf;  
+                
+            
+             
+             	}
         
         @Override
         public void calculateActivation() {

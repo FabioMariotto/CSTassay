@@ -20,6 +20,8 @@
 package memory;
 
 import java.awt.Polygon;
+import java.util.ArrayList;
+import java.util.List;
 import ws3dproxy.model.WorldPoint;
 
 /**
@@ -30,6 +32,7 @@ public class CreatureInnerSense {
     public WorldPoint position;
     public double pitch;
     public double fuel;
+    public List<String> LEAF;
     public Polygon FOV;
     
     public String toString() {
